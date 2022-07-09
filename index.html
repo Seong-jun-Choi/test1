@@ -1,16 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 기본 코드 -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+
+    <!-- 다른 방식으로 html 코드를 구현 (jQuery 문법도 사용) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+
+    <!-- 톱니바퀴>프로젝트 설정>CDN -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBABtjCFNmouyZXDEVUBjUbHYimYL-24t0",
+            authDomain: "test1-2a872.firebaseapp.com",
+            projectId: "test1-2a872",
+            storageBucket: "test1-2a872.appspot.com",
+            messagingSenderId: "969343532143",
+            appId: "1:969343532143:web:912e965db573ccf7e0e19a"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
     <title>Document</title>
 </head>
+
 <body>
-    aeoijfasoiejfieosfj
-    asdfasdfasdfsadf
-    asdfasdf
-    //////////////////////////////////////////
-    나도 이제 코딩 마스터?
+    <button class="update_db">불러오기</button>
+    <button id="GILEE">doc</button>
+    <button id="adadadad">add</button>
+    <button id="dele">delete</button>
+    <button id="jangchenupdate">jcupdate</button>
+
+    <!-- div, p > html 코드 -->
+    <!-- 구역 -->
+    <div id="content"></div>
+
+    <script>
+        const db = firebase.firestore();
+
+        $("#GILEE").click(function () {
+            db.collection("불독").doc("bullduck").set({
+                testfield: "씨발 안끝나냐"
+            })
+        })
+
+        $("#adadadad").click(function () {
+            db.collection("불독").add({
+                내가넣고싶은: "내 하얼빈 장첸이야"
+            })
+        })
+
+
+        $(".update_db").click(function () {
+            db.collection("불독").get().then((result) => {
+                result.forEach((doc) => {
+                    $("#content").append(doc.data().내가넣고싶은)
+                })
+            })
+        })
+
+        $("#dele").click(function () {
+            db.collection("불독").get().then((result) => {
+                result.forEach((doc) => {
+                    if (doc.data().내가넣고싶은 === "내 하얼빈") {
+                        db.collection("불독").doc(doc.id).delete()
+                    }
+                })
+            })
+        })
+
+        $("#jangchenupdate").click(function () {
+            db.collection("불독").get().then((result) => {
+                result.forEach((doc) => {
+                    if (doc.data().내가넣고싶은 === "ㅁㄴㅇㄹ") {
+                        db.collection("불독").doc(doc.id).update({
+                            내가넣고싶은 : "마자화자부라자"
+                        })
+                    }
+                })
+            })
+        })
+
+        db.collection("불독").doc("qIBKPohqAYaeX3VKddZm").onSnapshot((result) => {
+            $("#content").html(result.data().내가넣고싶은)
+        })
+
+        // // j쿼리 문법: 달러, .:클래스로 찾는다. #: 아이디로 찾는다.
+        //     $(".update_db").click(function() {
+        //         alert("안녕? 나 경익이~");
+        //     })
+        //     $("#GILEE").click(function(){
+        //         alert("내 누군지 아니?");
+        //     })
+    </script>
+    <!-- <div>
+        지랄노
+        <br>
+        지랄 하지말
+        <br>
+        지랄하지말라고
+        <br>
+        아니 씨발련아
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <span>클레릭 구한다고</span>
+    <p>클레릭 없냐???</p>
+    <h1>하드루시드갈 0.5 비숍 구합니다</h1> -->
 </body>
+
 </html>
